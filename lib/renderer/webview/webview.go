@@ -351,7 +351,7 @@ func (w *webview) Terminate() {
 func _webviewDispatchGoCallback(index unsafe.Pointer) {
 	defer func() {
 		if r := recover(); r != nil {
-			log.Println("Recovered from _webviewDispatchGoCallback", index)
+			log.Println("Recovered from _webviewDispatchGoCallback")
 		}
 	}()
 
