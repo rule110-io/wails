@@ -98,6 +98,7 @@ static inline void CgoWebViewDispatch(void *w, uintptr_t arg) {
 import "C"
 import (
 	"errors"
+	"log"
 	"runtime"
 	"sync"
 	"unsafe"
@@ -348,6 +349,12 @@ func (w *webview) Terminate() {
 
 //export _webviewDispatchGoCallback
 func _webviewDispatchGoCallback(index unsafe.Pointer) {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Println("Recovered from _webviewDispatchGoCallback", index)
+		}
+	}()
+
 	var f func()
 	m.Lock()
 	f = fns[uintptr(index)]
